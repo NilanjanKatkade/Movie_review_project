@@ -3,6 +3,8 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
+const API_URL = "https://popcornai-9i2s.onrender.com/api";
+
 export const useAuthStore = create((set) => ({
     //initial state
     user: null,
@@ -17,7 +19,7 @@ export const useAuthStore = create((set) => ({
     signUp: async (username, email, password) => {
         set({ isLoading: true, message: null });
         try {
-            const res = await axios.post("https://popcornai-9i2s.onrender.com/api/signup", {
+            const res = await axios.post(`${API_URL}/signup`, {
                 username, email, password
             })
             set({
@@ -40,7 +42,7 @@ export const useAuthStore = create((set) => ({
     login: async (username, password) => {
         set({ isLoading: true, message: null });
         try {
-            const res = await axios.post("https://popcornai-9i2s.onrender.com/api/login", { username, password })
+            const res = await axios.post(`${API_URL}/login`, { username, password })
             const {message } = res.data;
             set({
                 user: res.data.user,
@@ -80,7 +82,7 @@ export const useAuthStore = create((set) => ({
     fetchUser: async () => {
         set({ fetchingUser: true, error: null });
         try {
-            const res = await axios.get("https://popcornai-9i2s.onrender.com/api/fetch-user");
+            const res = await axios.get(`${API_URL}/fetch-user`);
             set({
                 user: res.data.user,
                 fetchingUser: false,
@@ -107,7 +109,7 @@ export const useAuthStore = create((set) => ({
     logout: async () => {
         set({ isLoading: true, error: null, message: null });
         try {
-            const res = await axios.post("https://popcornai-9i2s.onrender.com/api/logout");
+            const res = await axios.post(`${API_URL}/logout`);
             const { message } = res.data;
             set({
                 user: null,
